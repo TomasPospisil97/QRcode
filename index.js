@@ -33,3 +33,35 @@ customDropdown.forEach((item) =>{
         });
     });
 });
+
+const uploadElem = document.querySelector(".upload-img");
+const uploadImgInput = document.querySelector("#upload-img-input");
+
+uploadElem.addEventListener('click', () => {
+    uploadImgInput.click();
+});
+
+uploadImgInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        img = uploadImgInput.nextSibling.nextSibling;
+        img.src = reader.result;
+    }
+});
+
+
+const range = document.querySelector(".custom-slider input");
+const tooltip = document.querySelector(".custom-slider span");
+//const rangeValue = document.querySelector(".custom-slider span");
+
+function setValue() {
+    const newValue = Number(((range.value - range.min) * 100) / (range.max - range.min));
+    const newPosition = 16 - newValue * 0.32;
+    tooltip .innerHTML = range.value + " x " + range.value;
+    tooltip.style.left = `calc(${newValue}% + (${newPosition}px)`;
+}
+
+document.addEventListener("DOMContentLoaded" , setValue);
+range.addEventListener("input", setValue);
